@@ -5,7 +5,7 @@ import "./ContactList.css";
 
 const ContactList = ({ contacts, onDelete }) => (
   <ol>
-    {contacts.map(([name, number, id]) => (
+    {contacts.map(({ id, name, number }) => (
       <li key={shortid.generate()}>
         {name}: {number}
         <button onClick={onDelete.bind(this, id)}>Delete</button>
@@ -15,7 +15,7 @@ const ContactList = ({ contacts, onDelete }) => (
 );
 
 ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
+  contacts: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
   onDelete: PropTypes.func.isRequired,
 };
 

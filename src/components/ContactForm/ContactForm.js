@@ -5,7 +5,8 @@ import "./ContactForm.css";
 
 class ContactForm extends Component {
   static propTypes = {
-    contacts: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
+    contacts: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string))
+      .isRequired,
     updateState: PropTypes.func.isRequired,
   };
 
@@ -22,13 +23,13 @@ class ContactForm extends Component {
     const { name, value } = evt.target;
 
     this.setState({
-      [name]: value,
       id: shortid.generate(),
+      [name]: value,
     });
   };
 
-  findByName = (name) => {
-    return this.props.contacts.some(([elem]) => elem === name);
+  findByName = (contactName) => {
+    return this.props.contacts.some(({ name }) => name === contactName);
   };
 
   handleSubmit = (evt) => {
@@ -41,7 +42,7 @@ class ContactForm extends Component {
       return;
     }
 
-    this.props.updateState(name, number, id);
+    this.props.updateState(id, name, number);
     this.reset();
   };
 
